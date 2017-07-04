@@ -6,8 +6,6 @@ class Die(object):
 
     A die has a fixed number of sides which are three or more. Rolling a die returns one side based on their
     probability of landing face up
-
-
     """
 
     def __init__(self, sides=[1, 2, 3, 4, 5, 6], probs=[1/6]*6, cpmf=[1/6, 2/6, 3/6, 4/6, 5/6, 6/6]):
@@ -15,11 +13,11 @@ class Die(object):
         Setup 6 sided unbiased die by default
 
         :param sides: values of the sides of the die
-        :rtype sides: list
+        :type sides: list
         :param probs: probabilities of each side landing face up,
-        :rtype probs: list
+        :type probs: list
         :param cpmf: cumulative probability mass function
-        :rtype cpmf: list
+        :type cpmf: list
         """
 
         if len(sides) > 3:
@@ -47,18 +45,31 @@ class Die(object):
         rolled_prob = random.random() # returns probability -> [0, 1)
 
         for i, cum_prob in enumerate(self.cpmf):
-            if rolled_prob < cum_prob:
+            if rolled_prob <= cum_prob:
+                # if rolled_prob is below cumulative prob, return current side
                 return self.sides[i]
 
 
 class BiasedDie(Die):
     """
-    This is the biased die class. Takes in extra parameter to add bias on a side
+    This is the biased die class. Takes in extra parameter to add bias on a given side
 
 
     """
     def __init__(self, bias_side_pos, sides=[1, 2, 3, 4, 5, 6], probs=[1/6]*6, cpmf=[1/6, 2/6, 3/6, 4/6, 5/6, 6/6]):
+        """
+        Setup 6 sided unbiased die by default. Add high bias to a given side
 
+        :param bias_side_pos: index of side to add bias on
+        :type bias_side_pos: int
+        :param sides: values of the sides of the die
+        :type sides: list
+        :param probs: probabilities of each side landing face up,
+        :type probs: list
+        :param cpmf: cumulative probability mass function
+        :type cpmf: list
+
+        """
         new_probs= [0.4 / (len(probs) - 1) for _ in probs]
         new_probs[bias_side_pos] = 0.6
 
