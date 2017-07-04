@@ -10,8 +10,9 @@ Monte Carlo simulations to gauge which player maximizes winnings at guessing a D
 
 ![plot of simulation results](figure_1.png)
 
-Surprising results here. Code still under development  
+Smart player is always better at this game!  
 
+## Run script instruction
 Run simulation with `python run.py` from root doing 1000 iterations by default  
 Run simulation with `python run.py iters` for specific number of iterations
  
