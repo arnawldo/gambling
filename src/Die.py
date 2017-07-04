@@ -1,3 +1,6 @@
+import random
+
+
 class Die(object):
     """ This is the Die class
 
@@ -17,6 +20,7 @@ class Die(object):
         self.sides = sides
         self.probs = probs
         def calc_cpmf(probs):
+            """calculates cumulative distribution and returns CDF"""
             init_probs = [probs[0]]
             for i in range(1, len(probs)):
                 init_probs.append(init_probs[i - 1] + probs[i])
@@ -26,12 +30,28 @@ class Die(object):
 
     def roll(self):
         """Roll the die and return a side according to probability"""
-        pass
+
+        rolled_prob = random.random() # returns probability -> [0, 1)
+        for i, cum_prob in enumerate(self.cpmf):
+            if rolled_prob < cum_prob:
+                return self.sides[i]
+
 
 class BiasedDie(Die):
-    """This is the biased die class
+    """
+    This is the biased die class. Takes in extra parameter to add bias on a side
+
 
     """
+    def __init__(self, bias_side_pos, sides=[1, 2, 3, 4, 5, 6], probs=[1/6]*6, cpmf=[1/6, 2/6, 3/6, 4/6, 5/6, 6/6]):
+
+        new_probs= [0.4 / (len(probs) - 1) for _ in probs]
+        new_probs[bias_side_pos] = 0.6
+
+        super().__init__(sides, new_probs)
+
+
+
 
 
 class DieError(Exception):
@@ -44,7 +64,7 @@ class NotEnoughSidesError(DieError):
 
 
 if __name__ == "__main__":
-    die = Die()
+    die = BiasedDie(2)
     print(die.sides)
     print(die.probs)
     print(die.cpmf)
