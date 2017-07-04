@@ -58,19 +58,22 @@ class BiasedDie(Die):
     """
     def __init__(self, bias_side_pos, sides=[1, 2, 3, 4, 5, 6], probs=[1/6]*6, cpmf=[1/6, 2/6, 3/6, 4/6, 5/6, 6/6]):
         """
-        Setup 6 sided unbiased die by default. Add high bias to a given side
+        Setup 6 sided biased die by default. Add high bias of 0.6 by default to a given side
 
         :param bias_side_pos: index of side to add bias on
         :type bias_side_pos: int
         :param sides: values of the sides of the die
         :type sides: list
-        :param probs: probabilities of each side landing face up,
+        :param probs: probabilities of each side landing face up
         :type probs: list
         :param cpmf: cumulative probability mass function
         :type cpmf: list
 
         """
+
+        # equal distribute 0.4 probability to other sides
         new_probs= [0.4 / (len(probs) - 1) for _ in probs]
+        # set high probability to high bias side
         new_probs[bias_side_pos] = 0.6
 
         super().__init__(sides, new_probs)
