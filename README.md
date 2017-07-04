@@ -10,5 +10,7 @@ Monte Carlo simulations to gauge which player maximizes winnings at guessing a D
 
 ![plot of simulation results](figure_1.png)
 
+Surprising results here. Code still under development  
+
 Run simulation with `python run.py` from root 
 

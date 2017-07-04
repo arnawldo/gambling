@@ -7,18 +7,31 @@ class Die(object):
     A die has a fixed number of sides which are three or more. Rolling a die returns one side based on their
     probability of landing face up
 
-    :param sides: values of the sides of the die
-    :rtype sides: list
-    :param probs: probabilities of each side landing face up,
-    :rtype probs: list
-    :param cpmf: cumulative probability mass function
-    :rtype cpmf: list
+
     """
 
     def __init__(self, sides=[1, 2, 3, 4, 5, 6], probs=[1/6]*6, cpmf=[1/6, 2/6, 3/6, 4/6, 5/6, 6/6]):
+        """
+        Setup 6 sided unbiased die by default
 
-        self.sides = sides
-        self.probs = probs
+        :param sides: values of the sides of the die
+        :rtype sides: list
+        :param probs: probabilities of each side landing face up,
+        :rtype probs: list
+        :param cpmf: cumulative probability mass function
+        :rtype cpmf: list
+        """
+
+        if len(sides) > 3:
+            self.sides = sides
+        else:
+            raise NotEnoughSidesError("Die needs at least four sides")
+
+        if sum(probs) > 1:
+            raise InvalidProbailitySpaceError("Probabilities must sum to 1 at most")
+        else:
+            self.probs = probs
+
         def calc_cpmf(probs):
             """calculates cumulative distribution and returns CDF"""
             init_probs = [probs[0]]
@@ -32,6 +45,7 @@ class Die(object):
         """Roll the die and return a side according to probability"""
 
         rolled_prob = random.random() # returns probability -> [0, 1)
+
         for i, cum_prob in enumerate(self.cpmf):
             if rolled_prob < cum_prob:
                 return self.sides[i]
@@ -62,9 +76,5 @@ class DieError(Exception):
 class NotEnoughSidesError(DieError):
     pass
 
-
-if __name__ == "__main__":
-    die = BiasedDie(2)
-    print(die.sides)
-    print(die.probs)
-    print(die.cpmf)
+class InvalidProbailitySpaceError(DieError):
+    pass
