@@ -1,6 +1,6 @@
 import pytest
 
-from src.Die import Die, BiasedDie, NotEnoughSidesError, InvalidProbailitySpaceError
+from src.Die import Die, BiasedDie, NotEnoughSidesError, InvalidProbabilitySpaceError
 
 
 def test__die_is_instance__succeeds():
@@ -21,7 +21,7 @@ def test__die_sides__less_than_4__raises():
         die = Die(sides=[1, 2], probs=[0.5, 0.5], cpmf=[0.5, 1])
 
 def test__die_probs__less_than_equal_to_1__raises():
-    with pytest.raises(InvalidProbailitySpaceError):
+    with pytest.raises(InvalidProbabilitySpaceError):
         die = Die(sides=[1, 2, 3, 4], probs=[0.5, 0.5, 0.5, 0.5], cpmf=[0.5, 1, 1, 1])
 
 

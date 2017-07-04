@@ -26,7 +26,7 @@ class Die(object):
             raise NotEnoughSidesError("Die needs at least four sides")
 
         if sum(probs) > 1:
-            raise InvalidProbailitySpaceError("Probabilities must sum to 1 at most")
+            raise InvalidProbabilitySpaceError("Probabilities must sum to 1 at most")
         else:
             self.probs = probs
 
@@ -90,5 +90,5 @@ class DieError(Exception):
 class NotEnoughSidesError(DieError):
     pass
 
-class InvalidProbailitySpaceError(DieError):
+class InvalidProbabilitySpaceError(DieError):
     pass
