@@ -1,3 +1,4 @@
+import sys
 import matplotlib.pyplot as plt
 
 from src.Die import Die, BiasedDie
@@ -52,5 +53,9 @@ def plot_winnings(n_iterations):
 
 
 
-
-plot_winnings(1000)
+if __name__ == "__main__":
+    try:
+        n_iterations = int(sys.argv[1])
+    except IndexError:
+        n_iterations = 1000
+    plot_winnings(n_iterations)
